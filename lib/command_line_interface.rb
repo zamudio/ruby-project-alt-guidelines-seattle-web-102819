@@ -83,7 +83,7 @@ class CommandLineInterface
                 #FIX
                 # delete_review
                 break
-            elsif input.downcase == 'exit'.downcase
+            elsif input.downcase == 'exit'
                 break
             else
                 puts ""
@@ -94,6 +94,7 @@ class CommandLineInterface
     end
 
     def find_user
+        @user = 
     end
 
     def find_band
@@ -108,7 +109,7 @@ class CommandLineInterface
             puts "First, let's enter your name:"
             name_input = gets.chomp
 
-            if name_input.downcase == 'exit'.downcase
+            if name_input.downcase == 'exit'
                 options
                 break
             end
@@ -117,7 +118,7 @@ class CommandLineInterface
             puts "Next, let's enter your age:"
             age_input = gets.chomp
 
-            if age_input == 'exit'
+            if age_input.downcase == 'exit'
                 options
                 break
             end
@@ -126,7 +127,7 @@ class CommandLineInterface
             puts "Last step, let's enter your email:"
             email_input = gets.chomp
 
-            if email_input == 'exit'
+            if email_input.downcase == 'exit'
                 options
                 break
             end
