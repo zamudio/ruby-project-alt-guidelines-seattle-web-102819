@@ -94,6 +94,7 @@ class CommandLineInterface
             name_input = gets.chomp
 
             if name_input.downcase == 'exit'.downcase
+                options
                 break
             end
 
@@ -102,6 +103,7 @@ class CommandLineInterface
             age_input = gets.chomp
 
             if age_input == 'exit'
+                options
                 break
             end
 
@@ -110,6 +112,7 @@ class CommandLineInterface
             email_input = gets.chomp
 
             if email_input == 'exit'
+                options
                 break
             end
 
