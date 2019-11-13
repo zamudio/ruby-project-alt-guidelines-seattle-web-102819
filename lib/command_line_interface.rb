@@ -42,7 +42,7 @@ class CommandLineInterface
         while true
             input = gets.chomp
             if input == '1'
-                #FIX
+                create_user
                 break
             elsif input == '2'
                 #FIX
@@ -75,6 +75,59 @@ class CommandLineInterface
                 puts ""
                 puts 'Oops! Command not found. Please press the number for the option you want...'
             end
+        end
+    end
+
+    def create_user
+        while true
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts ""
+            puts "Create a new user profile!"
+            puts "Type exit to quit"
+            puts ""
+            puts "First, let's enter your name:"
+            name_input = gets.chomp
+
+            if name_input == 'exit'
+                break
+            end
+
+            puts ""
+            puts "Next, let's enter your age:"
+            age_input = gets.chomp
+
+            if age_input == 'exit'
+                break
+            end
+
+            puts ""
+            puts "Last step, let's enter your email:"
+            email_input = gets.chomp
+
+            if email_input == 'exit'
+                break
+            end
+
+            User.create(:name => name_input, :age => age_input, email: email_input)
         end
     end
 
