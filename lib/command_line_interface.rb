@@ -25,13 +25,13 @@ class CommandLineInterface
         puts ""
         puts "(4) Find User"
         puts ""
-        puts "(5) Find all user reviews"
+        puts "(5) Find All User Reviews"
         puts ""
-        puts "(6) Edit User"
+        puts "(6) Find All Reviews Related to Band"
         puts ""
-        puts "(7) Edit review"
+        puts "(7) Edit User"
         puts ""
-        puts "(8) Find all reviews related to band"
+        puts "(8) Edit Review"
         puts ""
         puts "(9) Delete Review"
         puts ""
@@ -49,30 +49,39 @@ class CommandLineInterface
                 break
             elsif input == '2'
                 #FIX
+                # create_review
                 break
             elsif input == '3'
                 #FIX
+                # find_band
                 break
             elsif input == '4'
                 #FIX
+                # find_user
                 break
             elsif input == '5'
                 #FIX
+                # find_all_user_reviews
                 break
             elsif input == '6'
                 #FIX
+                # find_all_band_reviews
                 break
             elsif input == '7'
                 #FIX
+                # edit_user
                 break
             elsif input == '8'
                 #FIX
+                # edit_review
                 break
             elsif input == '9'
                 #FIX
+                # delete_user
                 break
             elsif input == '10'
                 #FIX
+                # delete_review
                 break
             elsif input.downcase == 'exit'.downcase
                 break
@@ -82,6 +91,12 @@ class CommandLineInterface
                 puts 'Oops! Command not found. Please press the number for the option you want...'
             end
         end
+    end
+
+    def find_user
+    end
+
+    def find_band
     end
 
     def create_user
@@ -122,12 +137,67 @@ class CommandLineInterface
         end
     end
 
-    def find_a_bands_review
-        puts "Looking for a band to review?"
-        puts "Enter a band to search for them and create their review:"
-        band_name = gets.chomp
+    def create_review
+        # FIX FIX FIX FIX FIX
+        #
+        # while true
+        #     space_helper(21)
+        #     puts "Create a new review!"
+        #     puts "Type exit to quit"
+        #     puts ""
+        #     puts "First, let's enter your name:"
+        #     name_input = gets.chomp
 
-        # ma = MusicArtist.find_by(name: band_name)
-        # puts ma.reviews
+        #     if name_input.downcase == 'exit'.downcase
+        #         options
+        #         break
+        #     end
+
+        #     puts ""
+        #     puts "Next, let's enter your age:"
+        #     age_input = gets.chomp
+
+        #     if age_input == 'exit'
+        #         options
+        #         break
+        #     end
+
+        #     puts ""
+        #     puts "Last step, let's enter your email:"
+        #     email_input = gets.chomp
+
+        #     if email_input == 'exit'
+        #         options
+        #         break
+        #     end
+
+        #     User.create(:name => name_input, :age => age_input, email: email_input)
+        #     options
+        #     break
+        # end
+    end
+
+    def find_all_user_reviews
+    end
+
+    def find_all_band_reviews
+    #     puts "Looking for a band to review?"
+    #     puts "Enter a band to search for them and create their review:"
+    #     band_name = gets.chomp
+
+    #     # ma = MusicArtist.find_by(name: band_name)
+    #     # puts ma.reviews
+    end
+
+    def edit_user
+    end
+
+    def edit_review
+    end
+
+    def delete_user
+    end
+
+    def delete_review
     end
 end
