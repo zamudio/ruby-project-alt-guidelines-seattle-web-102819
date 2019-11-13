@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 3) do
     t.string "review"
     t.integer "rating"
     t.integer "user_id"
-    t.integer "artist_id"
+    t.integer "music_artist_id"
   end
 
   create_table "users", force: :cascade do |t|
