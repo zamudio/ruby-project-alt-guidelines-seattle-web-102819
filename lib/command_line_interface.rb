@@ -16,19 +16,66 @@ class CommandLineInterface
     def options
         puts ""
         puts ""
+        puts "(1) Create User"
+        puts ""
+        puts "(2) Create Review"
+        puts ""
+        puts "(3) Find Band"
+        puts ""
+        puts "(4) Find all user reviews"
+        puts ""
+        puts "(5) Edit User"
+        puts ""
+        puts "(6) Edit review"
+        puts ""
+        puts "(7) Find all reviews related to band"
+        puts ""
+        puts "(8) Delete Review"
+        puts ""
+        puts "(9) Delete User"
+        puts ""
+        puts "(10) Exit program..."
         puts ""
         puts ""
-        puts ""
-        puts ""
-        puts ""
-        puts ""
-        puts ""
-        puts ""
-        puts ""
-        puts ""
-        puts ""
-        puts ""
-        puts ""
+        puts "Select the number for the option you want:"
+
+        while true
+            input = gets.chomp
+            if input == '1'
+                #FIX
+                break
+            elsif input == '2'
+                #FIX
+                break
+            elsif input == '3'
+                #FIX
+                break
+            elsif input == '4'
+                #FIX
+                break
+            elsif input == '5'
+                #FIX
+                break
+            elsif input == '6'
+                #FIX
+                break
+            elsif input == '7'
+                #FIX
+                break
+            elsif input == '8'
+                #FIX
+                break
+            elsif input == '9'
+                #FIX
+                break
+            elsif input == '10'
+                break
+            else
+                puts ""
+                puts ""
+                puts 'Oops! Command not found. Please press the number for the option you want...'
+            end
+        end
     end
 
     def find_a_bands_review
