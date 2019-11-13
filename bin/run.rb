@@ -1,3 +1,6 @@
 require_relative '../config/environment'
 
-puts "hello world"
+# binding.pry
+cli = CommandLineInterface.new
+cli.greet
+cli.find_a_band
