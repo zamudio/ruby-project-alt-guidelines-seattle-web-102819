@@ -23,7 +23,7 @@ class CommandLineInterface
         puts "Enter a band to search for them and create their review:"
         band_name = gets.chomp
 
-        ma = MusicArtist.find_by(name: band_name)
-        puts ma.reviews
+        # ma = MusicArtist.find_by(name: band_name)
+        # puts ma.reviews
     end
 end
