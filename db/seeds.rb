@@ -3,6 +3,7 @@ User.destroy_all
 Review.destroy_all
 
 
+
 10.times do |i|
     MusicArtist.create(name: Faker::Music.unique.band, genre: Faker::Music.unique.genre, album: Faker::Music.unique.album)
 end
