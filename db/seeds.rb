@@ -15,5 +15,5 @@ end
 end
 
 10.times do |i|
-    Review.create(review: Faker::TvShows::BojackHorseman.quote, rating: Faker::Number.number(digits: 1), user_id: User.all.sample.id, music_artist_id: MusicArtist.all.sample.id)
+    Review.create(review: Faker::TvShows::BojackHorseman.unique.quote, rating: Faker::Number.number(digits: 1), user_id: User.all.sample.id, music_artist_id: MusicArtist.all.sample.id)
 end
