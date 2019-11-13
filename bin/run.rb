@@ -1,7 +1,7 @@
 require_relative '../config/environment'
 
-# binding.pry
 cli = CommandLineInterface.new
+# start_sound = Sound.new('Startup1.wav')
+# start_sound.play
 cli.greet
 cli.options
-# cli.find_a_bands_review
