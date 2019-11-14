@@ -139,15 +139,15 @@ class CommandLineInterface
             puts "Type exit at any time to quit..."
             puts ""
             puts "Enter the name of the Band you'd like to find:"
-            name_input = gets.chomp
-            name_input = name_input.downcase
+            band_name_input = gets.chomp
+            band_name_input = band_name_input.downcase
             
-            if name_input.downcase == 'exit'
+            if band_name_input.downcase == 'exit'
                 options
                 break
             end
 
-            @band = MusicArtist.find_by(name: name_input.titleize)
+            @band = MusicArtist.find_by(name: band_name_input.titleize)
             if @band == nil
                 space_helper(22)
                 puts "Band not found :("
