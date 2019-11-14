@@ -122,7 +122,7 @@ class CommandLineInterface
                 break
             else
                 space_helper(20)
-                puts "FOUND THE USER: #{@user.name}"
+                puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
                 space_helper(2)
                 puts "Press enter to return to main menu"
                 return_input = gets.chomp
