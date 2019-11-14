@@ -12,11 +12,11 @@ class CommandLineInterface
         puts "|  _ <  |  __/  \\ V /  | | |  __/  \\ V  V /    | | | | | | | |_| | \\__ \\ | | | (__  |_|"
         puts "|_| \\_\\  \\___|   \\_/   |_|  \\___|   \\_/\\_/     |_| |_| |_|  \\__,_| |___/ |_|  \\___| (_)"
         space_helper(4)
-        #
+
         sound = Music.new('looperman-l-0630386-0183461-joefunktastic-rewind-retro-80s-style-synth-75bm.wav')
         sound.play
-        #
-        puts "Hit enter to continue..."
+
+        puts "Press enter to continue..."
         input = gets.chomp
         sound.stop
     end
@@ -43,8 +43,7 @@ class CommandLineInterface
         puts "(10) Delete User"
         puts ""
         puts "Type 'Exit' to quit program..."
-        puts ""
-        puts ""
+        space_helper(2)
         puts "Select the number for the option you want:"
 
         while true
@@ -61,7 +60,6 @@ class CommandLineInterface
                 # find_band
                 break
             elsif input == '4'
-                #FIX
                 find_user
                 break
             elsif input == '5'
@@ -91,9 +89,8 @@ class CommandLineInterface
             elsif input.downcase == 'exit'
                 break
             else
-                puts ""
-                puts ""
-                puts 'Oops! Command not found. Please press the number for the option you want...'
+                space_helper(2)
+                puts 'Oops! Command not found. Please enter the number for the option you want...'
             end
         end
     end
@@ -102,68 +99,41 @@ class CommandLineInterface
         while true
             space_helper(21)
             puts "Find a user!"
-            puts "Type exit to quit"
+            puts "Type exit at any time to quit..."
             puts ""
             puts "Enter the name of the User you'd like to find:"
             name_input = gets.chomp
+            name_input = name_input.downcase
             
             if name_input.downcase == 'exit'
                 options
                 break
             end
 
-            @user = User.find_by(name: name_input)
-            # puts @user.name
+            @user = User.find_by(name: name_input.titleize)
             if @user == nil
                 space_helper(22)
                 puts "User not found. Create a new User from options menu!"
                 puts ""
-                puts "Hit enter to return to menu:"
+                puts "Press enter to return to menu"
                 fail_input = gets.chomp
                 if fail_input.downcase == ''
                     break
                 end
                 break
             else
-                ###
-                space_helper(5)
-                puts "YAYAYAYAYAYAY FOUND THE USER"
-                space_helper(3)
-                puts "Hit enter to return to main menu"
+                space_helper(20)
+                puts "FOUND THE USER: #{@user.name}"
+                space_helper(2)
+                puts "Press enter to return to main menu"
                 return_input = gets.chomp
             end
-
-            # if @user == true
-            #     puts @user.name
-            # else
-            #     space_helper(22)
-            #     puts "User not found. Create a new User from options menu!"
-            #     puts ""
-            #     puts "Hit enter to return to menu:"
-            #     fail_input = gets.chomp
-            #     if fail_input.downcase == ''
-            #         break
-            #     end
-                # break
-            # end
-            
-            #     puts ""
-            #     puts "Hit enter to find a new User, else type 'Exit':"
-            #     fail_input = gets.chomp
-            #     if fail_input.downcase == 'exit'
-            #         options
-            #     else
-            #         find_user
-            #         break
-            #     end
-            # end
             break
         end
         options
     end
 
     def find_band
-        #
     end
 
     def create_user
