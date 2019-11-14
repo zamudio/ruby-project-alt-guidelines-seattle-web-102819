@@ -350,9 +350,6 @@ class CommandLineInterface
 
                 if review != nil
                     puts "FOUND THE BAND: #{@band.name}"
-                    puts ""
-                    puts "genre: #{@band.genre}, album: #{@band.album}"
-                    space_helper(1)
                     all_reviews = Review.where(music_artist_id: @band.id)
                     all_reviews.each_with_index do |r, index|
                         user_id = r.user_id
@@ -362,16 +359,12 @@ class CommandLineInterface
                         puts "Review by #{user_name.name}:"
                         puts "#{r.review}"
                     end
-                    space_helper(2)
+                    space_helper(4)
                     puts "Press enter to return to main menu"
                     return_input = gets.chomp
                     break
                 else
                     puts "FOUND THE BAND: #{@band.name}"
-                    puts ""
-                    puts "genre: #{@band.genre}"
-                    puts ""
-                    puts "album: #{@band.album}"
                     space_helper(4)
                     puts "No reviews for this band :("
                     puts "Go back to the menu and create one!"
