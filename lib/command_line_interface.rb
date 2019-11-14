@@ -5,6 +5,12 @@ class CommandLineInterface
         end
     end
 
+    # def menu_return(input)
+    #     loop do
+    #         break if input == 'exit'
+    #     end
+    # end
+
     def greet
         puts " ____                   _                                                 _          _ "
         puts "|  _ \\    ___  __   __ (_)   ___  __      __    _ __ ___    _   _   ___  (_)   ___  | |"
@@ -63,11 +69,10 @@ class CommandLineInterface
                 break
             elsif input == '5'
                 #FIX
-                # find_all_user_reviews
+                find_all_user_reviews
                 break
             elsif input == '6'
-                #FIX
-                # find_all_band_reviews
+                find_all_band_reviews
                 break
             elsif input == '7'
                 #FIX
@@ -92,6 +97,44 @@ class CommandLineInterface
                 puts 'Oops! Command not found. Please enter the number for the option you want...'
             end
         end
+    end
+
+    def find_band
+        while true
+            space_helper(21)
+            puts "Find a Band!"
+            puts "Type exit at any time to quit..."
+            puts ""
+            puts "Enter the name of the Band you'd like to find:"
+            band_name_input = gets.chomp
+            band_name_input = band_name_input.downcase
+            
+            if band_name_input.downcase == 'exit'
+                options
+                break
+            end
+
+            @band = MusicArtist.find_by(name: band_name_input.titleize)
+            if @band == nil
+                space_helper(22)
+                puts "Band not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input.downcase == ''
+                    break
+                end
+                break
+            else
+                space_helper(20)
+                puts "FOUND THE BAND: #{@band.name}, genre: #{@band.genre}, album: #{@band.album}"
+                space_helper(2)
+                puts "Press enter to return to main menu"
+                return_input = gets.chomp
+            end
+            break
+        end
+        options
     end
 
     def find_user
@@ -123,44 +166,6 @@ class CommandLineInterface
             else
                 space_helper(20)
                 puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
-                space_helper(2)
-                puts "Press enter to return to main menu"
-                return_input = gets.chomp
-            end
-            break
-        end
-        options
-    end
-
-    def find_band
-        while true
-            space_helper(21)
-            puts "Find a Band!"
-            puts "Type exit at any time to quit..."
-            puts ""
-            puts "Enter the name of the Band you'd like to find:"
-            band_name_input = gets.chomp
-            band_name_input = band_name_input.downcase
-            
-            if band_name_input.downcase == 'exit'
-                options
-                break
-            end
-
-            @band = MusicArtist.find_by(name: band_name_input.titleize)
-            if @band == nil
-                space_helper(22)
-                puts "Band not found :("
-                puts ""
-                puts "Press enter to return to menu"
-                fail_input = gets.chomp
-                if fail_input.downcase == ''
-                    break
-                end
-                break
-            else
-                space_helper(20)
-                puts "FOUND THE BAND: #{@band.name}"
                 space_helper(2)
                 puts "Press enter to return to main menu"
                 return_input = gets.chomp
@@ -246,18 +251,137 @@ class CommandLineInterface
         #     options
         #     break
         # end
+
+        #     puts "Looking for a band to review?"
+        #     puts "Enter a band to search for them and create their review:"
+        #     band_name = gets.chomp
+
+        #     # ma = MusicArtist.find_by(name: band_name)
+        #     # puts ma.reviews
     end
 
     def find_all_user_reviews
+        while true
+            space_helper(21)
+            puts "Find all reviews by a User!"
+            puts "Type exit at any time to quit..."
+            puts ""
+            puts "Enter the name of the User you'd like to find:"
+            user_name_input = gets.chomp
+            user_name_input = user_name_input.downcase
+            
+            if user_name_input.downcase == 'exit'
+                options
+                break
+            end
+
+            @user = User.find_by(name: user_name_input.titleize)
+            if @user == nil
+                space_helper(22)
+                puts "User not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input.downcase == ''
+                    break
+                end
+                break
+            else
+                space_helper(20)
+                review = Review.find_by(user_id: @user.id)
+
+                if review != nil
+                    puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
+                    space_helper(2)
+                    all_reviews = Review.where(user_id: @user.id)
+                    all_reviews.each_with_index do |r, index|
+                        space_helper(2)
+                        puts "Rating of #{r.rating}"
+                        puts "REVIEW:"
+                        puts "#{r.review}"
+                    end
+                    space_helper(4)
+                    puts "Press enter to return to main menu"
+                    return_input = gets.chomp
+                    break
+                else
+                    puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
+                    space_helper(4)
+                    puts "No reviews from this User :("
+                    puts "Go back to the menu and create one!"
+                    space_helper(4)
+                    puts "Press enter to return to main menu"
+                    return_input = gets.chomp
+                end
+            end
+            break
+        end
+        options
     end
 
     def find_all_band_reviews
-    #     puts "Looking for a band to review?"
-    #     puts "Enter a band to search for them and create their review:"
-    #     band_name = gets.chomp
+        while true
+            space_helper(21)
+            puts "Find Band reviews!"
+            puts "Type exit at any time to quit..."
+            puts ""
+            puts "Enter the name of the Band you'd like to find:"
+            band_name_input = gets.chomp
+            band_name_input = band_name_input.downcase
+            
+            if band_name_input.downcase == 'exit'
+                options
+                break
+            end
 
-    #     # ma = MusicArtist.find_by(name: band_name)
-    #     # puts ma.reviews
+            @band = MusicArtist.find_by(name: band_name_input.titleize)
+            if @band == nil
+                space_helper(22)
+                puts "Band not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input.downcase == ''
+                    break
+                end
+                break
+            else
+                space_helper(20)
+                review = Review.find_by(music_artist_id: @band.id)
+
+                if review != nil
+                    puts "FOUND THE BAND: #{@band.name}"
+                    puts ""
+                    puts "genre: #{@band.genre}, album: #{@band.album}"
+                    space_helper(2)
+                    all_reviews = Review.where(music_artist_id: @band.id)
+                    all_reviews.each_with_index do |r, index|
+                        space_helper(2)
+                        puts "Rating of #{r.rating}"
+                        puts "REVIEW:"
+                        puts "#{r.review}"
+                    end
+                    space_helper(4)
+                    puts "Press enter to return to main menu"
+                    return_input = gets.chomp
+                    break
+                else
+                    puts "FOUND THE BAND: #{@band.name}"
+                    puts ""
+                    puts "genre: #{@band.genre}"
+                    puts ""
+                    puts "album: #{@band.album}"
+                    space_helper(4)
+                    puts "No reviews for this band :("
+                    puts "Go back to the menu and create one!"
+                    space_helper(4)
+                    puts "Press enter to return to main menu"
+                    return_input = gets.chomp
+                end
+            end
+            break
+        end
+        options
     end
 
     def edit_user
