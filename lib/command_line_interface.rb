@@ -56,8 +56,7 @@ class CommandLineInterface
                 # create_review
                 break
             elsif input == '3'
-                #FIX
-                # find_band
+                find_band
                 break
             elsif input == '4'
                 find_user
@@ -98,7 +97,7 @@ class CommandLineInterface
     def find_user
         while true
             space_helper(21)
-            puts "Find a user!"
+            puts "Find a User!"
             puts "Type exit at any time to quit..."
             puts ""
             puts "Enter the name of the User you'd like to find:"
@@ -134,6 +133,41 @@ class CommandLineInterface
     end
 
     def find_band
+        while true
+            space_helper(21)
+            puts "Find a Band!"
+            puts "Type exit at any time to quit..."
+            puts ""
+            puts "Enter the name of the Band you'd like to find:"
+            name_input = gets.chomp
+            name_input = name_input.downcase
+            
+            if name_input.downcase == 'exit'
+                options
+                break
+            end
+
+            @band = MusicArtist.find_by(name: name_input.titleize)
+            if @band == nil
+                space_helper(22)
+                puts "Band not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input.downcase == ''
+                    break
+                end
+                break
+            else
+                space_helper(20)
+                puts "FOUND THE BAND: #{@band.name}"
+                space_helper(2)
+                puts "Press enter to return to main menu"
+                return_input = gets.chomp
+            end
+            break
+        end
+        options
     end
 
     def create_user
