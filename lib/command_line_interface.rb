@@ -32,7 +32,7 @@ class CommandLineInterface
         puts ""
         puts "(2) Create Review"
         puts ""
-        puts "(3) Find Band"
+        puts "(3) Find a Band"
         puts ""
         puts "(4) Find User"
         puts ""
@@ -67,7 +67,6 @@ class CommandLineInterface
                 find_user
                 break
             elsif input == '5'
-                #FIX
                 find_all_user_reviews
                 break
             elsif input == '6'
@@ -288,18 +287,19 @@ class CommandLineInterface
             else
                 space_helper(20)
                 review = Review.find_by(user_id: @user.id)
-
                 if review != nil
-                    puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
-                    space_helper(2)
+                    puts "FOUND ALL REVIEWS BY USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
+                    space_helper(1)
                     all_reviews = Review.where(user_id: @user.id)
                     all_reviews.each_with_index do |r, index|
+                        band_id = r.music_artist_id
+                        band_name = MusicArtist.find_by(id: band_id)
                         space_helper(2)
-                        puts "Rating of #{r.rating}"
-                        puts "REVIEW:"
+                        puts "Rating of #{r.rating} out of 10"
+                        puts "Review of #{band_name.name}:"
                         puts "#{r.review}"
                     end
-                    space_helper(4)
+                    space_helper(2)
                     puts "Press enter to return to main menu"
                     return_input = gets.chomp
                     break
@@ -352,15 +352,17 @@ class CommandLineInterface
                     puts "FOUND THE BAND: #{@band.name}"
                     puts ""
                     puts "genre: #{@band.genre}, album: #{@band.album}"
-                    space_helper(2)
+                    space_helper(1)
                     all_reviews = Review.where(music_artist_id: @band.id)
                     all_reviews.each_with_index do |r, index|
+                        user_id = r.user_id
+                        user_name = User.find_by(id: user_id)
                         space_helper(2)
                         puts "Rating of #{r.rating}"
-                        puts "REVIEW:"
+                        puts "Review by #{user_name.name}:"
                         puts "#{r.review}"
                     end
-                    space_helper(4)
+                    space_helper(2)
                     puts "Press enter to return to main menu"
                     return_input = gets.chomp
                     break

@@ -2,5 +2,5 @@ require_relative '../config/environment'
 
 cli = CommandLineInterface.new
 cli.greet
-# binding.pry
+binding.pry
 cli.options
