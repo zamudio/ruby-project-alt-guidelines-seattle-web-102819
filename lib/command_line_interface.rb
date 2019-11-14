@@ -37,13 +37,13 @@ class CommandLineInterface
         puts ""
         puts "(2) Create Review"
         puts ""
-        puts "(3) Find a Band"
+        puts "(3) Find A Band"
         puts ""
-        puts "(4) Find User"
+        puts "(4) List All Bands"
         puts ""
-        puts "(5) Find All User Reviews"
+        puts "(5) Find All Your User Reviews"
         puts ""
-        puts "(6) Find All Reviews Related to Band"
+        puts "(6) Find All Reviews Related To A Band"
         puts ""
         puts "(7) Edit User"
         puts ""
@@ -137,6 +137,11 @@ class CommandLineInterface
             break
         end
         options
+    end
+
+    def list_all_bands
+        while true
+        end
     end
 
     # def find_user
@@ -390,6 +395,7 @@ class CommandLineInterface
         while true
             space_helper(21)
             puts "Delete a review"
+            space_helper(4)
             puts "Type exit at any time to quit..."
             puts ""
             puts "First, enter your name:"
@@ -410,13 +416,14 @@ class CommandLineInterface
             end
 
             user_info(user_name_input)
+            band_info(band_name_input)
             if @user == nil
                 space_helper(22)
                 puts "User not found :("
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input.downcase == ''
+                if fail_input == ''
                     break
                 end
                 break
@@ -433,14 +440,22 @@ class CommandLineInterface
                     delete_input = gets.chomp
                     delete_input = delete_input.downcase
                     if delete_input == 'exit'
+                        options
                         break
-                    elsif delete_input == 'no'
-                        break
-                    elsif delete_input == 'yes'
-                        puts "Ok, deleting User..."
-                        @user.destroy
                     end
-                    break
+                    if delete_input == 'no'
+                        options
+                        break
+                    end
+                    if delete_input == 'yes'
+                        space_helper(2)
+                        puts "Ok, deleting the review..."
+                        sleep 2
+                        review.destroy
+                    end
+                    space_helper(4)
+                    puts "Review deleted!"
+                    sleep 3
                 end
             end
             options
@@ -449,13 +464,10 @@ class CommandLineInterface
     end
 
     def delete_user
-        # take the name of the user **remember the find user method**
-        # destroys that user in the db
-        # returns message saying it was deleted
-        # @user.destroy_by
         while true
             space_helper(22)
             puts "Delete a User"
+            space_helper(4)
             puts "Type exit at any time to quit..."
             puts ""
             puts "First, enter your name:"
@@ -467,17 +479,17 @@ class CommandLineInterface
             end
 
             user_info(user_name_input)
-            # if @user == nil
-            #     space_helper(22)
-            #     puts "User not found :("
-            #     puts ""
-            #     puts "Press enter to return to menu"
-            #     fail_input = gets.chomp
-            #     if fail_input.downcase == ''
-            #         break
-            #     end
-            #     break
-            # end
+            if @user == nil
+                space_helper(22)
+                puts "User not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input.downcase == ''
+                    options
+                    break
+                end
+            end
             space_helper(20)
             if @user != nil
                 puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
@@ -503,12 +515,10 @@ class CommandLineInterface
                         r.destroy
                     end
                     @user.destroy
-                    # reviews = Review.find_by(user_id: @user.id)
-                    # reviews.destroy
                 end
-                space_helper(2)
+                space_helper(4)
                 puts "User deleted!"
-                sleep 1
+                sleep 3
             end
             options
             break
