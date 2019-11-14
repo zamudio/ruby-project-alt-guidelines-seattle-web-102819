@@ -87,11 +87,11 @@ class CommandLineInterface
                 break
             elsif input == '9'
                 #FIX
-                # delete_user
+                delete_review
                 break
             elsif input == '10'
                 #FIX
-                # delete_review
+                delete_user
                 break
             elsif input.downcase == 'exit'
                 break
@@ -184,7 +184,8 @@ class CommandLineInterface
             puts ""
             puts "First, let's enter your name:"
             name_input = gets.chomp
-            if name_input.downcase == 'exit'
+            name_input.downcase
+            if name_input == 'exit'
                 options
                 break
             end
@@ -192,7 +193,8 @@ class CommandLineInterface
             puts ""
             puts "Next, let's enter your age:"
             age_input = gets.chomp
-            if age_input.downcase == 'exit'
+            age_input.downcase
+            if age_input == 'exit'
                 options
                 break
             end
@@ -200,12 +202,13 @@ class CommandLineInterface
             puts ""
             puts "Last step, let's enter your email:"
             email_input = gets.chomp
-            if email_input.downcase == 'exit'
+            email_input.downcase
+            if email_input == 'exit'
                 options
                 break
             end
 
-            User.create(:name => name_input, :age => age_input, :email => email_input)
+            User.create(:name => name_input.titleize, :age => age_input.titleize, :email => email_input)
             options
             break
         end
@@ -219,6 +222,7 @@ class CommandLineInterface
             puts ""
             puts "First, let's enter your name:"
             user_name_input = gets.chomp
+            user_name_input.downcase
             user_info(user_name_input)
             user_name_id = @user.id
             if user_name_input.downcase == 'exit'
@@ -229,6 +233,7 @@ class CommandLineInterface
             puts ""
             puts "Next, let's enter the name of the band you'd like to review:"
             band_name_input = gets.chomp
+            band_name_input.downcase
             band_info(band_name_input)
             band_name_id = @band.id
             if band_name_input.downcase == 'exit'
@@ -381,91 +386,132 @@ class CommandLineInterface
     def edit_review
     end
 
+    def delete_review
+        while true
+            space_helper(21)
+            puts "Delete a review"
+            puts "Type exit at any time to quit..."
+            puts ""
+            puts "First, enter your name:"
+            user_name_input = gets.chomp
+            user_name_input = user_name_input.downcase
+            if user_name_input == 'exit'
+                options
+                break
+            end
+
+            puts ""
+            puts "Next, type the name of the Band so we can delete that review:"
+            band_name_input = gets.chomp
+            band_name_input = band_name_input.downcase
+            if band_name_input == 'exit'
+                options
+                break
+            end
+
+            user_info(user_name_input)
+            if @user == nil
+                space_helper(22)
+                puts "User not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input.downcase == ''
+                    break
+                end
+                break
+            else
+                space_helper(20)
+                review = Review.find_by(user_id: @user.id, music_artist_id: @band.id)
+                if review != nil
+                    puts "FOUND THE REVIEW: by #{@user.name}"
+                    puts "Rating: #{review.rating}"
+                    puts "#{review.review}"
+                    space_helper(2)
+                    puts "Are you sure you want to delete this review?"
+                    puts "Type yes or no..."
+                    delete_input = gets.chomp
+                    delete_input = delete_input.downcase
+                    if delete_input == 'exit'
+                        break
+                    elsif delete_input == 'no'
+                        break
+                    elsif delete_input == 'yes'
+                        puts "Ok, deleting User..."
+                        @user.destroy
+                    end
+                    break
+                end
+            end
+            options
+            break
+        end
+    end
+
     def delete_user
         # take the name of the user **remember the find user method**
         # destroys that user in the db
         # returns message saying it was deleted
         # @user.destroy_by
-    end
+        while true
+            space_helper(22)
+            puts "Delete a User"
+            puts "Type exit at any time to quit..."
+            puts ""
+            puts "First, enter your name:"
+            user_name_input = gets.chomp
+            user_name_input = user_name_input.downcase
+            if user_name_input == 'exit'
+                options
+                break
+            end
 
-    def delete_review
-        # while true
-        #     space_helper(21)
-        #     puts "Delete a review"
-        #     puts "Type exit at any time to quit..."
-        #     puts ""
-        #     puts "First, enter your name:"
-        #     user_name_input = gets.chomp
-        #     user_name_input = user_name_input.downcase
-        #     if user_name_input.downcase == 'exit'
-        #         options
-        #         break
-        #     end
-
-
-
-
-
-        #     @user = User.find_by
-            
-        #     review = Review.find_by()
-
-
-        #     @user = User.find_by(name: user_name_input.titleize)
-        #     if @user == nil
-        #         space_helper(22)
-        #         puts "User not found :("
-        #         puts ""
-        #         puts "Press enter to return to menu"
-        #         fail_input = gets.chomp
-        #         if fail_input.downcase == ''
-        #             break
-        #         end
-        #         break
-        #     else
-        #         space_helper(20)
-        #         review = Review.find_by(user_id: @user.id)
-        #         if review != nil
-        #             puts "FOUND ALL REVIEWS BY USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
-        #             space_helper(1)
-        #             all_reviews = Review.where(user_id: @user.id)
-        #             all_reviews.each_with_index do |r, index|
-        #                 band_id = r.music_artist_id
-        #                 band_name = MusicArtist.find_by(id: band_id)
-        #                 space_helper(2)
-        #                 puts "Rating of #{r.rating} out of 10"
-        #                 puts "Review of #{band_name.name}:"
-        #                 puts "#{r.review}"
-        #             end
-        #             space_helper(2)
-        #             puts "Press enter to return to main menu"
-        #             return_input = gets.chomp
-        #             break
-        #         else
-        #             puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
-        #             space_helper(4)
-        #             puts "No reviews from this User :("
-        #             puts "Go back to the menu and create one!"
-        #             space_helper(4)
-        #             puts "Press enter to return to main menu"
-        #             return_input = gets.chomp
-        #         end
-        #     end
-        #     break
-        # end
-        # options
-        # while true
-        #     find_player
-        #     find_game_by_name
-      
-        #     review_to_remove = Review.find_by(player_id: @player.id, game_id: @game.id)
-      
-        #     review_to_remove.destroy
-        #     puts "The review has been deleted"
-      
-      
-        #     break
-        #   end
-        #   choices
+            user_info(user_name_input)
+            # if @user == nil
+            #     space_helper(22)
+            #     puts "User not found :("
+            #     puts ""
+            #     puts "Press enter to return to menu"
+            #     fail_input = gets.chomp
+            #     if fail_input.downcase == ''
+            #         break
+            #     end
+            #     break
+            # end
+            space_helper(20)
+            if @user != nil
+                puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
+                puts ""
+                puts "Are you sure you want to delete your User and all associated reviews?"
+                puts "Type yes or no..."
+                delete_input = gets.chomp
+                delete_input = delete_input.downcase
+                if delete_input == 'exit'
+                    options
+                    break
+                end
+                if delete_input == 'no'
+                    options
+                    break
+                end
+                if delete_input == 'yes'
+                    space_helper(2)
+                    puts "Ok, deleting the User..."
+                    sleep 2
+                    all_reviews = Review.where(user_id: @user.id)
+                    all_reviews.each_with_index do |r, index|
+                        r.destroy
+                    end
+                    @user.destroy
+                    # reviews = Review.find_by(user_id: @user.id)
+                    # reviews.destroy
+                end
+                space_helper(2)
+                puts "User deleted!"
+                sleep 1
+            end
+            options
+            break
+        end
     end
 end
