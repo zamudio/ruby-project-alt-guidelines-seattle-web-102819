@@ -69,7 +69,7 @@ class CommandLineInterface
                 find_band
                 break
             elsif input == '4'
-                # find_user
+                list_all_bands
                 break
             elsif input == '5'
                 find_all_user_reviews
@@ -140,7 +140,19 @@ class CommandLineInterface
     end
 
     def list_all_bands
+        #FIX
+        #add inputs
+        #list
+        #etc
+        
         while true
+            space_helper(17)
+            all_bands = MusicArtist.all
+            all_bands.each do |band|
+                puts band.name
+            end
+            options
+            break
         end
     end
 
