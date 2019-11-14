@@ -58,8 +58,7 @@ class CommandLineInterface
                 create_user
                 break
             elsif input == '2'
-                #FIX
-                # create_review
+                create_review
                 break
             elsif input == '3'
                 find_band
@@ -207,57 +206,57 @@ class CommandLineInterface
                 break
             end
 
-            User.create(:name => name_input, :age => age_input, email: email_input)
+            User.create(:name => name_input, :age => age_input, :email => email_input)
             options
             break
         end
     end
 
     def create_review
-        # FIX FIX FIX FIX FIX
-        #
-        # while true
-        #     space_helper(21)
-        #     puts "Create a new review!"
-        #     puts "Type exit to quit"
-        #     puts ""
-        #     puts "First, let's enter your name:"
-        #     name_input = gets.chomp
+        while true
+            space_helper(21)
+            puts "Create a new review!"
+            puts "Type exit to quit"
+            puts ""
+            puts "First, let's enter your name:"
+            user_name_input = gets.chomp
+            user_name = User.find_by(name: user_name_input.titleize)
+            user_name_id = user_name.id
+            if user_name_input.downcase == 'exit'
+                options
+                break
+            end
 
-        #     if name_input.downcase == 'exit'.downcase
-        #         options
-        #         break
-        #     end
+            puts ""
+            puts "Next, let's enter the name of the band you'd like to review:"
+            band_name_input = gets.chomp
+            band_name = MusicArtist.find_by(name: band_name_input.titleize)
+            band_name_id = band_name.id
+            if band_name_input.downcase == 'exit'
+                options
+                break
+            end
 
-        #     puts ""
-        #     puts "Next, let's enter your age:"
-        #     age_input = gets.chomp
+            puts ""
+            puts "Next, let's rate the band from 0 to 10:"
+            rating_input = gets.chomp
+            if rating_input.downcase == 'exit'
+                options
+                break
+            end
 
-        #     if age_input == 'exit'
-        #         options
-        #         break
-        #     end
+            puts ""
+            puts "Last step, let's write a review:"
+            review_input = gets.chomp
+            if review_input.downcase == 'exit'
+                options
+                break
+            end
 
-        #     puts ""
-        #     puts "Last step, let's enter your email:"
-        #     email_input = gets.chomp
-
-        #     if email_input == 'exit'
-        #         options
-        #         break
-        #     end
-
-        #     User.create(:name => name_input, :age => age_input, email: email_input)
-        #     options
-        #     break
-        # end
-
-        #     puts "Looking for a band to review?"
-        #     puts "Enter a band to search for them and create their review:"
-        #     band_name = gets.chomp
-
-        #     # ma = MusicArtist.find_by(name: band_name)
-        #     # puts ma.reviews
+            Review.create(:review => review_input, :rating => rating_input, :user_id => user_name_id, :music_artist_id => band_name_id)
+            options
+            break
+        end
     end
 
     def find_all_user_reviews
