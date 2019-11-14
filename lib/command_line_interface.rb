@@ -5,6 +5,16 @@ class CommandLineInterface
         end
     end
 
+    def user_info(input)
+        #helper function
+        @user = User.find_by(name: input.titleize)
+    end
+
+    def band_info(input)
+        #helper function
+        @band = MusicArtist.find_by(name: input.titleize)
+    end
+
     # def menu_return(input)
     #     loop do
     #         break if input == 'exit'
@@ -64,7 +74,7 @@ class CommandLineInterface
                 find_band
                 break
             elsif input == '4'
-                find_user
+                # find_user
                 break
             elsif input == '5'
                 find_all_user_reviews
@@ -106,13 +116,12 @@ class CommandLineInterface
             puts "Enter the name of the Band you'd like to find:"
             band_name_input = gets.chomp
             band_name_input = band_name_input.downcase
-            
             if band_name_input.downcase == 'exit'
                 options
                 break
             end
 
-            @band = MusicArtist.find_by(name: band_name_input.titleize)
+            band_info(band_name_input)
             if @band == nil
                 space_helper(22)
                 puts "Band not found :("
@@ -135,43 +144,42 @@ class CommandLineInterface
         options
     end
 
-    def find_user
-        while true
-            space_helper(21)
-            puts "Find a User!"
-            puts "Type exit at any time to quit..."
-            puts ""
-            puts "Enter the name of the User you'd like to find:"
-            name_input = gets.chomp
-            name_input = name_input.downcase
-            
-            if name_input.downcase == 'exit'
-                options
-                break
-            end
+    # def find_user
+    #     while true
+    #         space_helper(21)
+    #         puts "Find a User!"
+    #         puts "Type exit at any time to quit..."
+    #         puts ""
+    #         puts "Enter the name of the User you'd like to find:"
+    #         name_input = gets.chomp
+    #         name_input = name_input.downcase
+    #         if name_input.downcase == 'exit'
+    #             options
+    #             break
+    #         end
 
-            @user = User.find_by(name: name_input.titleize)
-            if @user == nil
-                space_helper(22)
-                puts "User not found. Create a new User from options menu!"
-                puts ""
-                puts "Press enter to return to menu"
-                fail_input = gets.chomp
-                if fail_input.downcase == ''
-                    break
-                end
-                break
-            else
-                space_helper(20)
-                puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
-                space_helper(2)
-                puts "Press enter to return to main menu"
-                return_input = gets.chomp
-            end
-            break
-        end
-        options
-    end
+    #         user_info(name_input)
+    #         if @user == nil
+    #             space_helper(22)
+    #             puts "User not found. Create a new User from options menu!"
+    #             puts ""
+    #             puts "Press enter to return to menu"
+    #             fail_input = gets.chomp
+    #             if fail_input.downcase == ''
+    #                 break
+    #             end
+    #             break
+    #         else
+    #             space_helper(20)
+    #             puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
+    #             space_helper(2)
+    #             puts "Press enter to return to main menu"
+    #             return_input = gets.chomp
+    #         end
+    #         break
+    #     end
+    #     options
+    # end
 
     def create_user
         while true
@@ -181,7 +189,6 @@ class CommandLineInterface
             puts ""
             puts "First, let's enter your name:"
             name_input = gets.chomp
-
             if name_input.downcase == 'exit'
                 options
                 break
@@ -190,7 +197,6 @@ class CommandLineInterface
             puts ""
             puts "Next, let's enter your age:"
             age_input = gets.chomp
-
             if age_input.downcase == 'exit'
                 options
                 break
@@ -199,7 +205,6 @@ class CommandLineInterface
             puts ""
             puts "Last step, let's enter your email:"
             email_input = gets.chomp
-
             if email_input.downcase == 'exit'
                 options
                 break
@@ -219,8 +224,9 @@ class CommandLineInterface
             puts ""
             puts "First, let's enter your name:"
             user_name_input = gets.chomp
-            user_name = User.find_by(name: user_name_input.titleize)
-            user_name_id = user_name.id
+            # user_name = User.find_by(name: user_name_input.titleize)
+            user_info(user_name_input)
+            user_name_id = @user.id
             if user_name_input.downcase == 'exit'
                 options
                 break
@@ -229,8 +235,9 @@ class CommandLineInterface
             puts ""
             puts "Next, let's enter the name of the band you'd like to review:"
             band_name_input = gets.chomp
-            band_name = MusicArtist.find_by(name: band_name_input.titleize)
-            band_name_id = band_name.id
+            # band_name = MusicArtist.find_by(name: band_name_input.titleize)
+            band_info(band_name_input)
+            band_name_id = @band.id
             if band_name_input.downcase == 'exit'
                 options
                 break
@@ -267,13 +274,14 @@ class CommandLineInterface
             puts "Enter the name of the User you'd like to find:"
             user_name_input = gets.chomp
             user_name_input = user_name_input.downcase
-            
             if user_name_input.downcase == 'exit'
                 options
                 break
             end
 
-            @user = User.find_by(name: user_name_input.titleize)
+            # @user = User.find_by(name: user_name_input.titleize)
+            # @user = user_info(user_name_input)
+            user_info(user_name_input)
             if @user == nil
                 space_helper(22)
                 puts "User not found :("
@@ -327,13 +335,13 @@ class CommandLineInterface
             puts "Enter the name of the Band you'd like to find:"
             band_name_input = gets.chomp
             band_name_input = band_name_input.downcase
-            
             if band_name_input.downcase == 'exit'
                 options
                 break
             end
 
-            @band = MusicArtist.find_by(name: band_name_input.titleize)
+            # @band = MusicArtist.find_by(name: band_name_input.titleize)
+            band_info(band_name_input)
             if @band == nil
                 space_helper(22)
                 puts "Band not found :("
@@ -347,7 +355,6 @@ class CommandLineInterface
             else
                 space_helper(20)
                 review = Review.find_by(music_artist_id: @band.id)
-
                 if review != nil
                     puts "FOUND THE BAND: #{@band.name}"
                     all_reviews = Review.where(music_artist_id: @band.id)
@@ -392,5 +399,83 @@ class CommandLineInterface
     end
 
     def delete_review
+        # while true
+        #     space_helper(21)
+        #     puts "Delete a review"
+        #     puts "Type exit at any time to quit..."
+        #     puts ""
+        #     puts "First, enter your name:"
+        #     user_name_input = gets.chomp
+        #     user_name_input = user_name_input.downcase
+        #     if user_name_input.downcase == 'exit'
+        #         options
+        #         break
+        #     end
+
+
+
+
+
+        #     @user = User.find_by
+            
+        #     review = Review.find_by()
+
+
+        #     @user = User.find_by(name: user_name_input.titleize)
+        #     if @user == nil
+        #         space_helper(22)
+        #         puts "User not found :("
+        #         puts ""
+        #         puts "Press enter to return to menu"
+        #         fail_input = gets.chomp
+        #         if fail_input.downcase == ''
+        #             break
+        #         end
+        #         break
+        #     else
+        #         space_helper(20)
+        #         review = Review.find_by(user_id: @user.id)
+        #         if review != nil
+        #             puts "FOUND ALL REVIEWS BY USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
+        #             space_helper(1)
+        #             all_reviews = Review.where(user_id: @user.id)
+        #             all_reviews.each_with_index do |r, index|
+        #                 band_id = r.music_artist_id
+        #                 band_name = MusicArtist.find_by(id: band_id)
+        #                 space_helper(2)
+        #                 puts "Rating of #{r.rating} out of 10"
+        #                 puts "Review of #{band_name.name}:"
+        #                 puts "#{r.review}"
+        #             end
+        #             space_helper(2)
+        #             puts "Press enter to return to main menu"
+        #             return_input = gets.chomp
+        #             break
+        #         else
+        #             puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
+        #             space_helper(4)
+        #             puts "No reviews from this User :("
+        #             puts "Go back to the menu and create one!"
+        #             space_helper(4)
+        #             puts "Press enter to return to main menu"
+        #             return_input = gets.chomp
+        #         end
+        #     end
+        #     break
+        # end
+        # options
+        # while true
+        #     find_player
+        #     find_game_by_name
+      
+        #     review_to_remove = Review.find_by(player_id: @player.id, game_id: @game.id)
+      
+        #     review_to_remove.destroy
+        #     puts "The review has been deleted"
+      
+      
+        #     break
+        #   end
+        #   choices
     end
 end
