@@ -163,6 +163,7 @@ class CommandLineInterface
     end
 
     def find_band
+        #
     end
 
     def create_user
