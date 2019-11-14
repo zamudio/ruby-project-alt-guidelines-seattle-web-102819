@@ -1,25 +1,20 @@
 class CommandLineInterface
     def space_helper(num)
+        #helper function to create formatting spaces
         num.times do
             puts ""
         end
     end
 
     def user_info(input)
-        #helper function
+        #helper function to find user object
         @user = User.find_by(name: input.titleize)
     end
 
     def band_info(input)
-        #helper function
+        #helper function to find band object
         @band = MusicArtist.find_by(name: input.titleize)
     end
-
-    # def menu_return(input)
-    #     loop do
-    #         break if input == 'exit'
-    #     end
-    # end
 
     def greet
         puts " ____                   _                                                 _          _ "
@@ -28,12 +23,12 @@ class CommandLineInterface
         puts "|  _ <  |  __/  \\ V /  | | |  __/  \\ V  V /    | | | | | | | |_| | \\__ \\ | | | (__  |_|"
         puts "|_| \\_\\  \\___|   \\_/   |_|  \\___|   \\_/\\_/     |_| |_| |_|  \\__,_| |___/ |_|  \\___| (_)"
         space_helper(4)
-
+        #music for the start screen
         sound = Music.new('looperman-l-0630386-0183461-joefunktastic-rewind-retro-80s-style-synth-75bm.wav')
         sound.play
-
         puts "Press enter to continue..."
         input = gets.chomp
+        #kills music when leaving start screen
         sound.stop
     end
 
@@ -224,7 +219,6 @@ class CommandLineInterface
             puts ""
             puts "First, let's enter your name:"
             user_name_input = gets.chomp
-            # user_name = User.find_by(name: user_name_input.titleize)
             user_info(user_name_input)
             user_name_id = @user.id
             if user_name_input.downcase == 'exit'
@@ -235,7 +229,6 @@ class CommandLineInterface
             puts ""
             puts "Next, let's enter the name of the band you'd like to review:"
             band_name_input = gets.chomp
-            # band_name = MusicArtist.find_by(name: band_name_input.titleize)
             band_info(band_name_input)
             band_name_id = @band.id
             if band_name_input.downcase == 'exit'
@@ -279,8 +272,6 @@ class CommandLineInterface
                 break
             end
 
-            # @user = User.find_by(name: user_name_input.titleize)
-            # @user = user_info(user_name_input)
             user_info(user_name_input)
             if @user == nil
                 space_helper(22)
@@ -340,7 +331,6 @@ class CommandLineInterface
                 break
             end
 
-            # @band = MusicArtist.find_by(name: band_name_input.titleize)
             band_info(band_name_input)
             if @band == nil
                 space_helper(22)
