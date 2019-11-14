@@ -267,6 +267,10 @@ class CommandLineInterface
     end
 
     def delete_user
+        # take the name of the user **remember the find user method**
+        # destroys that user in the db
+        # returns message saying it was deleted
+        # @user.destroy_by
     end
 
     def delete_review
