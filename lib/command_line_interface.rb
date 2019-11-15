@@ -41,9 +41,9 @@ class CommandLineInterface
         puts ""
         puts "(4) List All Bands"
         puts ""
-        puts "(5) Find All Your User Reviews"
+        puts "(5) Find All Reviews Related To A Band"
         puts ""
-        puts "(6) Find All Reviews Related To A Band"
+        puts "(6) Find All Your User Reviews"
         puts ""
         puts "(7) Edit User"
         puts ""
@@ -72,10 +72,10 @@ class CommandLineInterface
                 list_all_bands
                 break
             elsif input == '5'
-                find_all_user_reviews
+                find_all_band_reviews
                 break
             elsif input == '6'
-                find_all_band_reviews
+                find_all_user_reviews
                 break
             elsif input == '7'
                 #FIX
@@ -86,11 +86,9 @@ class CommandLineInterface
                 # edit_review
                 break
             elsif input == '9'
-                #FIX
                 delete_review
                 break
             elsif input == '10'
-                #FIX
                 delete_user
                 break
             elsif input.downcase == 'exit'
@@ -140,19 +138,21 @@ class CommandLineInterface
     end
 
     def list_all_bands
-        #FIX
-        #add inputs
-        #list
-        #etc
-        
         while true
             space_helper(17)
+            puts "ALL KNOWN BANDS:"
+            space_helper(2)
             all_bands = MusicArtist.all
             all_bands.each do |band|
                 puts band.name
             end
-            options
-            break
+            space_helper(2)
+            puts "Press enter to return to menu:"
+            return_input = gets.chomp
+            if return_input == ""
+                options
+                break
+            end
         end
     end
 
@@ -239,10 +239,22 @@ class CommandLineInterface
             puts ""
             puts "First, let's enter your name:"
             user_name_input = gets.chomp
-            user_name_input.downcase
-            user_info(user_name_input)
-            user_name_id = @user.id
-            if user_name_input.downcase == 'exit'
+            user_name_input = user_name_input.downcase
+            @user = User.find_by(name: user_name_input.titleize)
+            if @user == nil
+                space_helper(22)
+                puts "User not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input.downcase == ''
+                    options
+                    break
+                end
+            else
+                user_name_id = @user.id
+            end
+            if user_name_input == 'exit'
                 options
                 break
             end
@@ -252,8 +264,20 @@ class CommandLineInterface
             band_name_input = gets.chomp
             band_name_input.downcase
             band_info(band_name_input)
-            band_name_id = @band.id
-            if band_name_input.downcase == 'exit'
+            if @band == nil
+                space_helper(22)
+                puts "Band not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input.downcase == ''
+                    options
+                    break
+                end
+            else
+                band_name_id = @band.id
+            end
+            if band_name_input == 'exit'
                 options
                 break
             end
