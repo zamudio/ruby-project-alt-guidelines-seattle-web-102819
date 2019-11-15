@@ -4,7 +4,10 @@ Module One Final Project
 ### Installation
 
 * Fork the repository
-* In your terminal, type 'bundle install'
+* In your terminal:
+    * type 'bundle install' and hit enter
+    * type 'rake db:migrate' and hit enter
+    * type 'rake db:seed' and hit enter
 * After that, everything should be good to go
 * HOWEVER, for best effect, 'brew cask install cool-retro-term' and use the apple style terminal from preferences
     * My code is formatted to work best in that terminal
@@ -12,7 +15,7 @@ Module One Final Project
 ### Running the program
 
 * The run file is located in the bin folder
-* To run the program, go to your terminal and type 'ruby bin/run.rb'
+* To run the program, go to your terminal and type 'ruby bin/run.rb' and hit enter
 * There is music during the intro screen, so volume on
 
 ### How to use the program
