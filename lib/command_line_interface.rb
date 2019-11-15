@@ -1,11 +1,3 @@
-=begin
-    For best effect, 'brew cask install cool-retro-term' and use the apple screen from preferences
-    This is just a working model. I have a TON of refactoring and see a ton of places where I am not following DRY
-    I plan to work on it more
-    It's mostly built to handle a lot of user responses
-    Sound on for intro
-=end
-
 class CommandLineInterface
     def space_helper(num)
         #helper function to create formatting spaces
@@ -129,7 +121,7 @@ class CommandLineInterface
             else
                 avg = []
                 all_reviews = Review.where(music_artist_id: @band.id)
-                if all_reviews.where(rating: nil)
+                if all_reviews.empty?
                     space_helper(22)
                     puts "No current rating for #{@band.name} :("
                     puts ""
