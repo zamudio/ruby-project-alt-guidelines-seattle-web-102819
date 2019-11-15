@@ -1,3 +1,12 @@
+=begin
+    For best effect, 'brew cask install cool-retro-term' and use the apple screen from preferences
+    This is just a working model. I have a TON of refactoring and see a ton of places where I am not following DRY
+    I plan to work on it more
+    It's mostly built to handle a lot of user responses
+    Sound on for intro
+=end
+
+
 class CommandLineInterface
     def space_helper(num)
         #helper function to create formatting spaces
@@ -33,6 +42,7 @@ class CommandLineInterface
     end
 
     def options
+        space_helper(2)
         puts "(1) Create User"
         puts ""
         puts "(2) Create Review"
@@ -45,14 +55,14 @@ class CommandLineInterface
         puts ""
         puts "(6) Find All Your User Reviews"
         puts ""
-        puts "(7) Edit User"
+        puts "(7) Edit Review"
         puts ""
-        puts "(8) Edit Review"
+        puts "(8) Delete Review"
         puts ""
-        puts "(9) Delete Review"
+        puts "(9) Delete User"
         puts ""
-        puts "(10) Delete User"
-        puts ""
+        # puts "(10) Delete User"
+        # puts ""
         puts "Type 'Exit' to quit program..."
         space_helper(2)
         puts "Select the number for the option you want:"
@@ -78,19 +88,17 @@ class CommandLineInterface
                 find_all_user_reviews
                 break
             elsif input == '7'
-                #FIX
-                # edit_user
+                edit_review
                 break
             elsif input == '8'
-                #FIX
-                # edit_review
-                break
-            elsif input == '9'
                 delete_review
                 break
-            elsif input == '10'
+            elsif input == '9'
                 delete_user
                 break
+            # elsif input == '10'
+            #     #
+            #     break
             elsif input.downcase == 'exit'
                 break
             else
@@ -240,6 +248,10 @@ class CommandLineInterface
             puts "First, let's enter your name:"
             user_name_input = gets.chomp
             user_name_input = user_name_input.downcase
+            if user_name_input == 'exit'
+                options
+                break
+            end
             @user = User.find_by(name: user_name_input.titleize)
             if @user == nil
                 space_helper(22)
@@ -254,15 +266,15 @@ class CommandLineInterface
             else
                 user_name_id = @user.id
             end
-            if user_name_input == 'exit'
-                options
-                break
-            end
 
             puts ""
             puts "Next, let's enter the name of the band you'd like to review:"
             band_name_input = gets.chomp
             band_name_input.downcase
+            if band_name_input == 'exit'
+                options
+                break
+            end
             band_info(band_name_input)
             if @band == nil
                 space_helper(22)
@@ -276,10 +288,6 @@ class CommandLineInterface
                 end
             else
                 band_name_id = @band.id
-            end
-            if band_name_input == 'exit'
-                options
-                break
             end
 
             puts ""
@@ -421,10 +429,94 @@ class CommandLineInterface
         options
     end
 
-    def edit_user
-    end
-
     def edit_review
+        while true
+            space_helper(21)
+            puts "Edit a review"
+            space_helper(4)
+            puts "Type exit at any time to quit..."
+            puts ""
+            puts "First, enter your name:"
+            user_name_input = gets.chomp
+            user_name_input = user_name_input.downcase
+            if user_name_input == 'exit'
+                options
+                break
+            end
+
+            puts ""
+            puts "Next, type the name of the Band so we can edit that review:"
+            band_name_input = gets.chomp
+            band_name_input = band_name_input.downcase
+            if band_name_input == 'exit'
+                options
+                break
+            end
+
+            user_info(user_name_input)
+            @band = MusicArtist.find_by(name: band_name_input.titleize)
+            if @user == nil
+                space_helper(22)
+                puts "User not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input == ''
+                    break
+                end
+                options
+                break
+            end
+            if @band == nil
+                space_helper(22)
+                puts "Band not found :("
+                puts ""
+                puts "Press enter to return to menu"
+                fail_input = gets.chomp
+                if fail_input == ''
+                    break
+                end
+                options
+                break
+            else
+                space_helper(20)
+                review = Review.find_by(user_id: @user.id, music_artist_id: @band.id)
+                if review != nil
+                    puts "FOUND THE REVIEW: by #{@user.name}"
+                    puts "Rating: #{review.rating}"
+                    puts "#{review.review}"
+                    space_helper(2)
+                    puts "Are you sure you want to edit this review?"
+                    puts "Type yes or no..."
+                    edit_input = gets.chomp
+                    edit_input = edit_input.downcase
+                    if edit_input == 'exit'
+                        options
+                        break
+                    end
+                    if edit_input == 'no'
+                        puts "Okay, returning you to the main menu..."
+                        sleep 1.5
+                        options
+                        break
+                    end
+                    if edit_input == 'yes'
+                        space_helper(2)
+                        puts "Ok, enter a new review:"
+                        new_review_input = gets.chomp
+                        if new_review_input == 'exit'
+                            options
+                            break
+                        end
+                        review.review = new_review_input
+                    end
+                    space_helper(4)
+                    puts "Review updated!"
+                end
+            end
+            options
+            break
+        end
     end
 
     def delete_review
@@ -480,6 +572,9 @@ class CommandLineInterface
                         break
                     end
                     if delete_input == 'no'
+                        space_helper(2)
+                        puts "Ok, returning you back to the main menu..."
+                        sleep 1.5
                         options
                         break
                     end
