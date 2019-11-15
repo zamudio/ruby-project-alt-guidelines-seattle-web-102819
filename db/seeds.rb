@@ -7,7 +7,7 @@ Review.reset_pk_sequence
 
 
 10.times do |i|
-    MusicArtist.create(name: Faker::Music.unique.band, genre: Faker::Music.unique.genre, album: Faker::Quotes::Shakespeare.unique.hamlet)
+    MusicArtist.create(name: Faker::Music.unique.band, genre: Faker::Music.genre, album: Faker::Hipster.unique.sentence)
 end
 
 10.times do |i|
