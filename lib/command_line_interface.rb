@@ -39,24 +39,25 @@ class CommandLineInterface
     end
 
     def options
-        space_helper(2)
         puts "(1) Create User"
         puts ""
         puts "(2) Create Review"
         puts ""
         puts "(3) Find A Band"
         puts ""
-        puts "(4) List All Bands"
+        puts "(4) Find Average Rating Of A Band"
         puts ""
-        puts "(5) Find All Reviews Related To A Band"
+        puts "(5) List All Bands"
         puts ""
-        puts "(6) Find All Your User Reviews"
+        puts "(6) Find All Reviews Related To A Band"
         puts ""
-        puts "(7) Edit Review"
+        puts "(7) Find All Your User Reviews"
         puts ""
-        puts "(8) Delete Review"
+        puts "(8) Edit Review"
         puts ""
-        puts "(9) Delete User"
+        puts "(9) Delete Review"
+        puts ""
+        puts "(10) Delete User"
         puts ""
         puts "Type 'Exit' to quit program..."
         space_helper(2)
@@ -74,21 +75,24 @@ class CommandLineInterface
                 find_band
                 break
             elsif input == '4'
-                list_all_bands
+                avg_rating_of_band
                 break
             elsif input == '5'
-                find_all_band_reviews
+                list_all_bands
                 break
             elsif input == '6'
-                find_all_user_reviews
+                find_all_band_reviews
                 break
             elsif input == '7'
-                edit_review
+                find_all_user_reviews
                 break
             elsif input == '8'
-                delete_review
+                edit_review
                 break
             elsif input == '9'
+                delete_review
+                break
+            elsif input == '10'
                 delete_user
                 break
             elsif input.downcase == 'exit'
@@ -97,6 +101,56 @@ class CommandLineInterface
                 space_helper(2)
                 puts 'Oops! Command not found. Please enter the number for the option you want...'
             end
+        end
+    end
+
+    def avg_rating_of_band
+        while true
+            space_helper(21)
+            puts "Find the average rating for any band!"
+            puts "Type exit at any time to quit..."
+            space_helper(2)
+            puts "Enter the name of the Band you'd like to find:"
+            band_name_input = gets.chomp
+            band_name_input.downcase
+            if band_name_input.downcase == 'exit'
+                options
+                break
+            end
+            band_info(band_name_input)
+            if @band == nil
+                space_helper(22)
+                puts "Band not found :("
+                puts ""
+                puts "Press enter to return to main menu..."
+                fail_input = gets.chomp
+                options
+                break
+            else
+                avg = []
+                all_reviews = Review.where(music_artist_id: @band.id)
+                if all_reviews.where(rating: nil)
+                    space_helper(22)
+                    puts "No current rating for #{@band.name} :("
+                    puts ""
+                    puts "Press enter to return to main menu..."
+                    fail_input = gets.chomp
+                    options
+                    break
+                else
+                    all_reviews.each do |r|
+                        avg << r.rating
+                    end
+                    avg_rating = (avg.reduce(:+).to_f / avg.size).round(1)
+                    space_helper(2)
+                    puts "The average rating for #{@band.name} is #{avg_rating}"
+                end
+            end
+            space_helper(2)
+            puts "Press enter to return to main menu"
+            return_input = gets.chomp
+            options
+            break
         end
     end
 
