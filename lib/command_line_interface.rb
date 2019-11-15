@@ -6,7 +6,6 @@
     Sound on for intro
 =end
 
-
 class CommandLineInterface
     def space_helper(num)
         #helper function to create formatting spaces
@@ -32,12 +31,10 @@ class CommandLineInterface
         puts "|  _ <  |  __/  \\ V /  | | |  __/  \\ V  V /    | | | | | | | |_| | \\__ \\ | | | (__  |_|"
         puts "|_| \\_\\  \\___|   \\_/   |_|  \\___|   \\_/\\_/     |_| |_| |_|  \\__,_| |___/ |_|  \\___| (_)"
         space_helper(4)
-        #music for the start screen
         sound = Music.new('looperman-l-0630386-0183461-joefunktastic-rewind-retro-80s-style-synth-75bm.wav')
         sound.play
         puts "Press enter to continue..."
         input = gets.chomp
-        #kills music when leaving start screen
         sound.stop
     end
 
@@ -61,8 +58,6 @@ class CommandLineInterface
         puts ""
         puts "(9) Delete User"
         puts ""
-        # puts "(10) Delete User"
-        # puts ""
         puts "Type 'Exit' to quit program..."
         space_helper(2)
         puts "Select the number for the option you want:"
@@ -96,9 +91,6 @@ class CommandLineInterface
             elsif input == '9'
                 delete_user
                 break
-            # elsif input == '10'
-            #     #
-            #     break
             elsif input.downcase == 'exit'
                 break
             else
@@ -121,85 +113,40 @@ class CommandLineInterface
                 options
                 break
             end
-
             band_info(band_name_input)
             if @band == nil
-                space_helper(22)
+            space_helper(22)
                 puts "Band not found :("
                 puts ""
-                puts "Press enter to return to menu"
+                puts "Press enter to return to main menu..."
                 fail_input = gets.chomp
                 if fail_input.downcase == ''
-                    break
+                    options
                 end
-                break
             else
                 space_helper(20)
                 puts "FOUND THE BAND: #{@band.name}, genre: #{@band.genre}, album: #{@band.album}"
                 space_helper(2)
-                puts "Press enter to return to main menu"
+                puts "Press enter to return to main menu..."
                 return_input = gets.chomp
+                options
             end
-            break
         end
-        options
     end
 
     def list_all_bands
-        while true
-            space_helper(17)
-            puts "ALL KNOWN BANDS:"
-            space_helper(2)
-            all_bands = MusicArtist.all
-            all_bands.each do |band|
-                puts band.name
-            end
-            space_helper(2)
-            puts "Press enter to return to menu:"
-            return_input = gets.chomp
-            if return_input == ""
-                options
-                break
-            end
+        space_helper(17)
+        puts "ALL KNOWN BANDS:"
+        space_helper(2)
+        all_bands = MusicArtist.all
+        all_bands.each do |band|
+            puts band.name
         end
+        space_helper(2)
+        puts "Press enter to return to main menu..."
+        return_input = gets.chomp
+        options
     end
-
-    # def find_user
-    #     while true
-    #         space_helper(21)
-    #         puts "Find a User!"
-    #         puts "Type exit at any time to quit..."
-    #         puts ""
-    #         puts "Enter the name of the User you'd like to find:"
-    #         name_input = gets.chomp
-    #         name_input = name_input.downcase
-    #         if name_input.downcase == 'exit'
-    #             options
-    #             break
-    #         end
-
-    #         user_info(name_input)
-    #         if @user == nil
-    #             space_helper(22)
-    #             puts "User not found. Create a new User from options menu!"
-    #             puts ""
-    #             puts "Press enter to return to menu"
-    #             fail_input = gets.chomp
-    #             if fail_input.downcase == ''
-    #                 break
-    #             end
-    #             break
-    #         else
-    #             space_helper(20)
-    #             puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
-    #             space_helper(2)
-    #             puts "Press enter to return to main menu"
-    #             return_input = gets.chomp
-    #         end
-    #         break
-    #     end
-    #     options
-    # end
 
     def create_user
         while true
@@ -214,7 +161,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             puts ""
             puts "Next, let's enter your age:"
             age_input = gets.chomp
@@ -223,7 +169,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             puts ""
             puts "Last step, let's enter your email:"
             email_input = gets.chomp
@@ -232,7 +177,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             User.create(:name => name_input.titleize, :age => age_input.titleize, :email => email_input)
             options
             break
@@ -252,21 +196,18 @@ class CommandLineInterface
                 options
                 break
             end
-            @user = User.find_by(name: user_name_input.titleize)
+            user_info(user_name_input)
             if @user == nil
                 space_helper(22)
                 puts "User not found :("
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input.downcase == ''
-                    options
-                    break
-                end
+                options
+                break
             else
                 user_name_id = @user.id
             end
-
             puts ""
             puts "Next, let's enter the name of the band you'd like to review:"
             band_name_input = gets.chomp
@@ -282,14 +223,11 @@ class CommandLineInterface
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input.downcase == ''
-                    options
-                    break
-                end
+                options
+                break
             else
                 band_name_id = @band.id
             end
-
             puts ""
             puts "Next, let's rate the band from 0 to 10:"
             rating_input = gets.chomp
@@ -297,7 +235,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             puts ""
             puts "Last step, let's write a review:"
             review_input = gets.chomp
@@ -305,7 +242,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             Review.create(:review => review_input, :rating => rating_input, :user_id => user_name_id, :music_artist_id => band_name_id)
             options
             break
@@ -325,7 +261,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             user_info(user_name_input)
             if @user == nil
                 space_helper(22)
@@ -333,9 +268,6 @@ class CommandLineInterface
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input.downcase == ''
-                    break
-                end
                 break
             else
                 space_helper(20)
@@ -355,7 +287,6 @@ class CommandLineInterface
                     space_helper(2)
                     puts "Press enter to return to main menu"
                     return_input = gets.chomp
-                    break
                 else
                     puts "FOUND THE USER: #{@user.name}, age: #{@user.age}, email: #{@user.email}"
                     space_helper(4)
@@ -366,9 +297,9 @@ class CommandLineInterface
                     return_input = gets.chomp
                 end
             end
+            options
             break
         end
-        options
     end
 
     def find_all_band_reviews
@@ -384,7 +315,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             band_info(band_name_input)
             if @band == nil
                 space_helper(22)
@@ -392,9 +322,7 @@ class CommandLineInterface
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input.downcase == ''
-                    break
-                end
+                options
                 break
             else
                 space_helper(20)
@@ -413,7 +341,6 @@ class CommandLineInterface
                     space_helper(4)
                     puts "Press enter to return to main menu"
                     return_input = gets.chomp
-                    break
                 else
                     puts "FOUND THE BAND: #{@band.name}"
                     space_helper(4)
@@ -424,9 +351,9 @@ class CommandLineInterface
                     return_input = gets.chomp
                 end
             end
+            options
             break
         end
-        options
     end
 
     def edit_review
@@ -443,7 +370,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             puts ""
             puts "Next, type the name of the Band so we can edit that review:"
             band_name_input = gets.chomp
@@ -452,18 +378,14 @@ class CommandLineInterface
                 options
                 break
             end
-
             user_info(user_name_input)
-            @band = MusicArtist.find_by(name: band_name_input.titleize)
+            band_info(band_name_input)
             if @user == nil
                 space_helper(22)
                 puts "User not found :("
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input == ''
-                    break
-                end
                 options
                 break
             end
@@ -473,9 +395,6 @@ class CommandLineInterface
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input == ''
-                    break
-                end
                 options
                 break
             else
@@ -512,6 +431,11 @@ class CommandLineInterface
                     end
                     space_helper(4)
                     puts "Review updated!"
+                else
+                    puts "Hmm... It doesn't seem like you've reviewed this band before..."
+                    space_helper(2)
+                    puts "Press enter to return to the main menu..."
+                    return_input = gets.chomp
                 end
             end
             options
@@ -533,7 +457,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             puts ""
             puts "Next, type the name of the Band so we can delete that review:"
             band_name_input = gets.chomp
@@ -542,7 +465,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             user_info(user_name_input)
             band_info(band_name_input)
             if @user == nil
@@ -551,9 +473,6 @@ class CommandLineInterface
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input == ''
-                    break
-                end
                 break
             else
                 space_helper(20)
@@ -608,7 +527,6 @@ class CommandLineInterface
                 options
                 break
             end
-
             user_info(user_name_input)
             if @user == nil
                 space_helper(22)
@@ -616,10 +534,8 @@ class CommandLineInterface
                 puts ""
                 puts "Press enter to return to menu"
                 fail_input = gets.chomp
-                if fail_input.downcase == ''
-                    options
-                    break
-                end
+                options
+                break
             end
             space_helper(20)
             if @user != nil
